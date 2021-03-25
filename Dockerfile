@@ -8,7 +8,9 @@ FROM openjdk:8-jdk-alpine
 MAINTAINER ajay
 WORKDIR /app
 RUN pwd
+WORKDIR /app
 COPY --from=build /home/app/target/backend-0.0.1-SNAPSHOT.jar backend-java-v1.0.0.jar
 RUN pwd
+WORKDIR /app
 ENTRYPOINT ["java","-jar","/app/backend-java-v1.0.0.jar"]
 EXPOSE 8080
