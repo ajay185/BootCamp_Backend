@@ -6,5 +6,5 @@ steps:
     entrypoint: mvn
     args: ["package", "-Dmaven.test.skip=true"]
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "gcr.io/mar-roidtc501/$BUILD_TEST", "--build-arg=JAR_FILE=target/backend-java-v1.0.0.jar", "."]
-images: ["gcr.io/$PROJECT_ID/hellospring"]
+    args: ["build", "-t", "gcr.io/mar-roidtc501/test:v1", "--build-arg=JAR_FILE=target/backend-java-v1.0.0.jar", "."]
+images: ["gcr.io/mar-roidtc501/test"]
