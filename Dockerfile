@@ -1,29 +1,15 @@
-FROM maven:3.6.0-jdk-11-slim AS build
-#COPY src /app/src
-#COPY pom.xml /app/
-#WORKDIR /app
-#RUN mvn -f pom.xml clean package
+FROM maven:3.5.2-jdk-8-alpine AS MAVEN_BUILD
 
-#FROM openjdk:8-jdk-alpine
-#WORKDIR /app
-#COPY ./target/backend-0.0.1-SNAPSHOT.jar backend-java-v1.0.0.jar
-#ENTRYPOINT ["java","-jar","/backend-java-v1.0.0.jar"]
-#EXPOSE 8080
-# For Java 8, try this
-# FROM openjdk:8-jdk-alpine
+COPY pom.xml /build/
+COPY src /build/src/
 
-# For Java 11, try this
-FROM adoptopenjdk/openjdk11:alpine-jre
+WORKDIR /build/
+RUN mvn package
 
-# Refer to Maven build -> finalName
-ARG JAR_FILE=target/backend-0.0.1-SNAPSHOT.jar
+FROM openjdk:8-jre-alpine
 
-# cd /opt/app
-WORKDIR /opt/app
+WORKDIR /app
 
-# cp target/spring-boot-web.jar /opt/app/app.jar
-COPY ${JAR_FILE} app.jar
+COPY --from=MAVEN_BUILD /build/target/backend-0.0.1-SNAPSHOT.jar /app/backend-test1.jar
 
-# java -jar /opt/app/app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
-EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "docker-boot-intro-0.1.0.jar"]
