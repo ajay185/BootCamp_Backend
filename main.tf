@@ -6,6 +6,11 @@ provider "azurerm" {
     
     features{}
 }
+module "cluster" {
+    source = "./modules/cluster/"
+    sp_client_id = var.sp_client_id
+    sp_client_secret = var.sp_client_secret
+}
 
 module "k8ss" {
     source =                            "./modules/k8s/"
