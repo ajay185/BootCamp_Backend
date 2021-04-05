@@ -122,7 +122,7 @@ spec:
     spec:
       containers:
         - name: cloud-ninja-backend
-          image: 'ajay185/backend:{{version}}'
+          image: 'ajay185/backend:tagversion'
           ports:
             - containerPort: 8080
               protocol: TCP
