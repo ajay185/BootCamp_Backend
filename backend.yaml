@@ -1,53 +1,29 @@
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: cloud-ninja-backend
-  namespace: kubernetes-aks1
   labels:
-    App: backend
-  managedFields:
+    app: cloud-ninja-backend
+  name: cloud-ninja-backend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      App: cloud-ninja-backend
+      app: cloud-ninja-backend
+  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        App: cloud-ninja-backend
+        app: cloud-ninja-backend
     spec:
       containers:
-        - name: cloud-ninja-backend
-          image: 'ajay185/backend:tagversion'
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-          resources:
-            limits:
-              cpu: 200m
-              memory: 2562Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
-          imagePullPolicy: IfNotPresent
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      automountServiceAccountToken: true
-      shareProcessNamespace: false
-      securityContext: {}
-      schedulerName: default-scheduler
-      enableServiceLinks: true
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
-  revisionHistoryLimit: 10
-  progressDeadlineSeconds: 60
-status:
-  observedGeneration: 1
-  replicas: 3
-  updatedReplicas: 3
-  readyReplicas: 3
-  availableReplicas: 3
+      - image: ajay185/backend:tagversion
+        name: cloud-ninja-backend
+        imagePullPolicy: "Always"
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: 100m
+          limits:
+            memory: "2562Mi"
+            cpu: 100m
+status: {}
