@@ -4,6 +4,7 @@ COPY pom.xml /build/
 COPY src /build/src/
 
 WORKDIR /build/
+RUN mvn test
 RUN mvn package
 
 FROM openjdk:8-jre-alpine
