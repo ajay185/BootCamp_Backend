@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cloud-ninja-backend
+  namespace: kubernetes-aks1
+  labels:
+    App: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      App: cloud-ninja-backend
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        App: cloud-ninja-backend
+    spec:
+      containers:
+        - name: cloud-ninja-backend
+          image: 'ajay185/backend:tagversion'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 2562Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
